@@ -299,7 +299,22 @@ def plotNAV(sd, title, c_latitude=10, c_longitude=80, savePlot=False, tracking_m
 	sats_details = getSatTrackingCoordList(sd, getISRONavSatelliteList(), tracking_minutes)
 	plotTrack(sats_details, title, 'nav_tracking.png', c_latitude, c_longitude, savePlot, tracking_minutes)
 	return
-
+# plot user defined single/multiple sat tracks
+def plotSatellites(sd, title, satlist, c_latitude=10, c_longitude=80, savePlot=False, tracking_minutes=300):			
+	sat_details=[]	
+	if(satlist):
+		for satname in (satlist):
+			satellite = getSatById(sd, satname)
+			satid = satellite.model.satnum
+			# reverse dictionary search
+			satname = list(getISROSatelliteList().keys())[list(getISROSatelliteList().values()).index(satid)]
+			# get lat lon
+			lat, lon =  getSatTrackingCoord(sd, satid, tracking_minutes)
+			# pack
+			sat_details.append([satname, satid, lat,lon])
+	# and plot
+	plotTrack(sat_details, title, 'sats_tracking.png', c_latitude, c_longitude, savePlot, tracking_minutes)
+	return	
 # __main method__ 
 if __name__=="__main__": 
 	
@@ -316,3 +331,7 @@ if __name__=="__main__":
 	plotNAV(sats_dict, 'ISRO Navigation satellite tracks for the next {} minutes'.format(tracking_minutes), c_lat, c_lon, savePng, tracking_minutes )
 	# GEO list
 	plotGEO(sats_dict, 'ISRO GEO satellites', c_lat, c_lon, savePng )	
+	# Single/multiple user specified satellite tracking
+	sat_names=['CARTOSAT-3','RISAT 2','RISAT-1','RISAT-2B','RISAT-2BR1']
+	tracking_minutes = 100
+	plotSatellites(sats_dict, 'satellite tracks for the next {} minutes'.format(tracking_minutes), sat_names, c_lat, c_lon, savePng, tracking_minutes)		

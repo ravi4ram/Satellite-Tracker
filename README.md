@@ -7,6 +7,7 @@
 * [Screenshots](#screenshots)
 * [Setup](#setup)
 * [How to run ](#how)
+* [Updates](#updates)
 * [To-do list](#to-do)
 
 ## General info
@@ -45,6 +46,14 @@ Script is written with python (Version: 3.6) on linux. Additional modules requir
 * It generates three png files (LEO map, NAV map and GEO map) at the current directory and opens the plot window one by one.  
 * If image files are not needed, change the flag to False on the code at line no.300 which reads    
 * `savePng = True` to `savePng = False` 
+
+## Updates
+* [28June2020] Included api and plots for user defined satellite list (single/multiple).    
+Results for the list provided as in line 335 of source code   
+`sat_names=['CARTOSAT-3','RISAT 2','RISAT-1','RISAT-2B','RISAT-2BR1']`  
+
+ ![results](./img/sats_tracking.png)
+
 
 ## To-do list
 * This initial version is ISRO specific and could be modified to fit other agencies.
