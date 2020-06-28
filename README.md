@@ -40,6 +40,12 @@ Script is written with python (Version: 3.6) on linux. Additional modules requir
 * Cartopy ( tested with Version: 0.18.0 )
     * requires Shapely (1.7.0)
 
+---
+Or if you have `python3` and `virtual environment`,
+
+- `python3 -m venv venv`
+- `pip install requirements.txt`
+
 ## How to run   
 * Verify and install required modules 
 * run `python satellite_tracker.py`. 
