@@ -60,6 +60,10 @@ Results for the list provided as in line 335 of source code
 
  ![results](./img/sats_tracking.png)
 
+* [02July2020] 
+    1.  TLE archive functionality added. When refreshing TLE's after two weeks, old local TLE will now be archived with timestamp attached.  
+    *  If celestrak.com does not return TLEs (for whatever reason), program will now skip tracing those satellites instead of reporting errors.
+
 
 ## To-do list
 * This initial version is ISRO specific and could be modified to fit other agencies.
