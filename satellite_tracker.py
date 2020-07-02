@@ -6,6 +6,7 @@ import numpy as np
 from skyfield import api
 from skyfield.api import load
 
+from pathlib import Path
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 import matplotlib.ticker as mticker
@@ -62,6 +63,17 @@ def getISROLEOSatelliteList():
 	dict.update(expr_sats)
 	return dict
 
+# delete an entry in any of the groupings, if exists.
+def deleteDictEntry(satname):
+	if satname:
+		comm_sats_geostat.pop(satname, None)
+		eart_sats_sunsync.pop(satname, None)
+		eart_sats_geostat.pop(satname, None)
+		regi_navi_geostat.pop(satname, None)
+		scie_sats.pop(satname, None)
+		expr_sats.pop(satname, None)
+	return
+
 # Saves a TLE file (filename) locally for the group of satellites 
 # provided in the dictionary
 def saveTLE(dictionary, filename):
@@ -73,7 +85,12 @@ def saveTLE(dictionary, filename):
 			with open(filename, 'rb+') as file:
 				file.seek(len(file.read())) # seek the end of file 
 				b = bytearray(fd.read())	# read as `bytes` object
-				file.write(b)				# and append-add it
+				tmp = str(b, 'utf-8') #...and now we convert it into string				
+				if not tmp.startswith('No TLE found'):
+					file.write(b)				# and append-add it
+				else:
+					print('TLE not found for ' + satname + '[' + str(satid) + ']' )					
+					deleteDictEntry(satname)					
 	file_out.close() 						# close the handle
 	return		
 
@@ -85,7 +102,8 @@ def readTLE(fileName='./india_tle.dat'):
 	# current date and time
 	ts = load.timescale(builtin=True)
 	t  = ts.now()
-	days = 1
+
+	days = 1; old_date = 0;
 	if not os.path.exists(fileName):
 		# call create local tle function
 		print("Creating new tle file")
@@ -99,11 +117,17 @@ def readTLE(fileName='./india_tle.dat'):
 		# get the first in the dictionary
 		sat_id = list(satellites.keys())[0] 
 		satellite = satellites[sat_id]
+
 		days = t - satellite.epoch
+		old_date = satellite.epoch.utc_strftime('-%Y-%m-%d-%H-%M-%S')		
 	# if older than refresh_days create new local tle and load new one 
 	if abs(days) > refresh_days:
 		# call create local tle function
 		print("Creating new tle file")
+		# backup old tle
+		backupFilename = Path(fileName).stem + old_date + '.dat'		
+		os.rename(fileName, backupFilename)
+		# get the new one
 		dict = getISROSatelliteList()
 		saveTLE(dict, fileName)		
 		# load the new one
@@ -120,6 +144,13 @@ def readTLE(fileName='./india_tle.dat'):
 	# return dictionary
 	return sats
   
+def getSatNameFromId(satid):
+	satname = ''
+	if satid:
+		# reverse dictionary search
+		satname = list(getISROSatelliteList().keys())[list(getISROSatelliteList().values()).index(satid)]
+	return satname
+	  
 # search by name/satid on the dictionary         
 def getSatById(sats_data, satid):
     if isinstance(satid, str):
@@ -287,18 +318,21 @@ def plotTrack(sats_details, title_text, save_text='out.png', c_latitude=10, c_lo
 		plt.savefig(save_text)
 	plt.show()
 	return
+	
 # plot leo sats
 def plotLEO(sd, title, c_latitude=10, c_longitude=80, savePlot=False, tracking_minutes=30):			
 	satnames=[]; satids=[]; lats=[]; lons=[]; 
 	sats_details = getSatTrackingCoordList(sd, getISROLEOSatelliteList(), tracking_minutes)
 	plotTrack(sats_details, title, 'leo_tracking.png', c_latitude, c_longitude, savePlot, tracking_minutes)
 	return
+	
 # plot nav sats	
 def plotNAV(sd, title, c_latitude=10, c_longitude=80, savePlot=False, tracking_minutes=600):			
 	satnames=[]; satids=[]; lats=[]; lons=[]; 
 	sats_details = getSatTrackingCoordList(sd, getISRONavSatelliteList(), tracking_minutes)
 	plotTrack(sats_details, title, 'nav_tracking.png', c_latitude, c_longitude, savePlot, tracking_minutes)
 	return
+	
 # plot user defined single/multiple sat tracks
 def plotSatellites(sd, title, satlist, c_latitude=10, c_longitude=80, savePlot=False, tracking_minutes=300):			
 	sat_details=[]	
@@ -306,8 +340,7 @@ def plotSatellites(sd, title, satlist, c_latitude=10, c_longitude=80, savePlot=F
 		for satname in (satlist):
 			satellite = getSatById(sd, satname)
 			satid = satellite.model.satnum
-			# reverse dictionary search
-			satname = list(getISROSatelliteList().keys())[list(getISROSatelliteList().values()).index(satid)]
+			satname = getSatNameFromId(satid)
 			# get lat lon
 			lat, lon =  getSatTrackingCoord(sd, satid, tracking_minutes)
 			# pack
@@ -315,23 +348,25 @@ def plotSatellites(sd, title, satlist, c_latitude=10, c_longitude=80, savePlot=F
 	# and plot
 	plotTrack(sat_details, title, 'sats_tracking.png', c_latitude, c_longitude, savePlot, tracking_minutes)
 	return	
+
 # __main method__ 
 if __name__=="__main__": 
-	
-	# user variables
-	tracking_minutes = 45
-	c_lat=10; c_lon=80;
-	savePng = True
+
 	# create isro satellite dictionary
 	sats_dict = readTLE()
-	# LEO list
+	# plot center location
+	c_lat=10; c_lon=80;
+	# LEO plot
+	tracking_minutes = 45; savePng = True;
 	plotLEO(sats_dict, 'ISRO LEO satellite tracks for the next {} minutes'.format(tracking_minutes), c_lat, c_lon, savePng, tracking_minutes )
-	# Nav list
-	tracking_minutes = 600
+	# Nav plot
+	tracking_minutes = 600; savePng = True;
 	plotNAV(sats_dict, 'ISRO Navigation satellite tracks for the next {} minutes'.format(tracking_minutes), c_lat, c_lon, savePng, tracking_minutes )
-	# GEO list
+	# GEO plot
+	savePng = True;
 	plotGEO(sats_dict, 'ISRO GEO satellites', c_lat, c_lon, savePng )	
 	# Single/multiple user specified satellite tracking
 	sat_names=['CARTOSAT-3','RISAT 2','RISAT-1','RISAT-2B','RISAT-2BR1']
-	tracking_minutes = 100
+	tracking_minutes = 100; savePng = True;
 	plotSatellites(sats_dict, 'satellite tracks for the next {} minutes'.format(tracking_minutes), sat_names, c_lat, c_lon, savePng, tracking_minutes)		
+
