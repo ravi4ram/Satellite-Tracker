@@ -50,12 +50,12 @@ Or if you have `python3` and `virtual environment`,
 * Verify and install required modules 
 * run `python satellite_tracker.py`. 
 * It generates three png files (LEO map, NAV map and GEO map) at the current directory and opens the plot window one by one.  
-* If image files are not needed, change the flag to False on the code at line no.300 which reads    
+* If image files are not needed, change the flag to False on the code which reads    
 * `savePng = True` to `savePng = False` 
 
 ## Updates
 * [28June2020] Included api and plots for user defined satellite list (single/multiple).    
-Results for the list provided as in line 335 of source code   
+Results for the list provided as in line 390 of source code   
 `sat_names=['CARTOSAT-3','RISAT 2','RISAT-1','RISAT-2B','RISAT-2BR1']`  
 
  ![results](./img/sats_tracking.png)
@@ -63,6 +63,9 @@ Results for the list provided as in line 335 of source code
 * [02July2020] 
     1.  TLE archive functionality added. When refreshing TLE's after two weeks, old local TLE will now be archived with timestamp attached.  
     *  If celestrak.com does not return TLEs (for whatever reason), program will now skip tracing those satellites instead of reporting errors.
+
+* [06Dec2020] 
+    1.  Included additional satellites [ 'RISAT-2BR2', 'HYSIS', 'PRATHAM' ] name and id into the list.    
 
 
 ## To-do list

@@ -17,17 +17,40 @@ from cartopy.mpl.gridliner import LONGITUDE_FORMATTER, LATITUDE_FORMATTER
 
 
 # Communication Satellites-Geostationary orbit
-comm_sats_geostat = {'INSAT-4B': 30793, 'INSAT-4CR': 32050, 'GSAT-6': 40880, 'GSAT-7': 39234, 'GSAT-8': 37605, 'GSAT-9': 42695, 'GSAT-10': 38779, 'GSAT-12': 37746, 'GSAT-14': 39498, 'GSAT-15': 41028, 'GSAT-16': 40332, 'GSAT-17': 42815, 'GSAT-18': 41793, 'GSAT-19': 42747, 'GSAT-29': 43698, 'GSAT-11': 43824, 'GSAT-7A': 43864, 'GSAT-31': 44035, 'GSAT-30': 45026}
+comm_sats_geostat = {	'INSAT-4B': 30793, 'INSAT-4CR': 32050, 
+						'GSAT-6': 40880, 'GSAT-7': 39234, 
+						'GSAT-8': 37605, 'GSAT-9': 42695, 
+						'GSAT-10': 38779, 'GSAT-12': 37746, 
+						'GSAT-14': 39498, 'GSAT-15': 41028, 
+						'GSAT-16': 40332, 'GSAT-17': 42815, 
+						'GSAT-18': 41793, 'GSAT-19': 42747, 
+						'GSAT-29': 43698, 'GSAT-11': 43824, 
+						'GSAT-7A': 43864, 'GSAT-31': 44035, 
+						'GSAT-30': 45026}
 # Earth Observation-Sun-synchronous orbit
-eart_sats_sunsync = {'RESOURCESAT-1': 28051, 'RESOURCESAT-2': 37387, 'RESOURCESAT-2A': 41877, 'CARTOSAT-1': 28649, 'CARTOSAT-2': 29710, 'CARTOSAT-2A': 32783, 'CARTOSAT-2B': 36795, 'CARTOSAT-2C': 41599, 'CARTOSAT-2D': 41948, 'CARTOSAT-2E': 42767, 'CARTOSAT-2F': 43111, 'CARTOSAT-3': 44804, 'RISAT 2': 34807, 'RISAT-1': 38248, 'RISAT-2B': 44233, 'RISAT-2BR1': 44857, 'OCEANSAT-2': 35931, 'MEGHA-TROPIQUES': 37838, 'SARAL': 39086, 'SCATSAT 1': 41790}
+eart_sats_sunsync = {	'RESOURCESAT-1': 28051, 'RESOURCESAT-2': 37387, 
+						'RESOURCESAT-2A': 41877, 'CARTOSAT-1': 28649, 
+						'CARTOSAT-2': 29710, 'CARTOSAT-2A': 32783, 
+						'CARTOSAT-2B': 36795, 'CARTOSAT-2C': 41599, 
+						'CARTOSAT-2D': 41948, 'CARTOSAT-2E': 42767, 
+						'CARTOSAT-2F': 43111, 'CARTOSAT-3': 44804, 
+						'RISAT 2': 34807, 'RISAT-1': 38248, 
+						'RISAT-2B': 44233, 'RISAT-2BR1': 44857, 
+						'OCEANSAT-2': 35931, 'MEGHA-TROPIQUES': 37838, 
+						'SARAL': 39086, 'SCATSAT 1': 41790, 
+						'HYSIS':43719, 'RISAT-2BR2':46905}
 # Earth Observation-Geostationary orbit
-eart_sats_geostat = {'INSAT-3D': 39216, 'INSAT-3DR': 41752}
+eart_sats_geostat = {	'INSAT-3D': 39216, 'INSAT-3DR': 41752}
 # Regional Navigation-Geostationary orbit
-regi_navi_geostat = {'IRNSS-1A': 39199, 'IRNSS-1B': 39635, 'IRNSS-1C': 40269, 'IRNSS-1D': 40547, 'IRNSS-1E': 41241, 'IRNSS-1F': 41384, 'IRNSS-1G': 41469, 'IRNSS-1I': 43286}
+regi_navi_geostat = {	'IRNSS-1A': 39199, 'IRNSS-1B': 39635, 
+						'IRNSS-1C': 40269, 'IRNSS-1D': 40547, 
+						'IRNSS-1E': 41241, 'IRNSS-1F': 41384, 
+						'IRNSS-1G': 41469, 'IRNSS-1I': 43286}
 # Scientific 
-scie_sats = {'ASTROSAT': 40930}
+scie_sats = {			'ASTROSAT': 40930}
 # Experimental
-expr_sats = {'INS-1A': 41949, 'INS-1B': 41954, 'INS-1C': 43116}
+expr_sats = {			'INS-1A': 41949, 'INS-1B': 41954, 
+						'INS-1C': 43116, 'PRATHAM':41783 }
 # Not available
 # scie_sats_2 =  {'MARS ORBITER MISSION': 39370, 'CHANDRAYAAN 2': 44441}
 	
@@ -321,14 +344,12 @@ def plotTrack(sats_details, title_text, save_text='out.png', c_latitude=10, c_lo
 	
 # plot leo sats
 def plotLEO(sd, title, c_latitude=10, c_longitude=80, savePlot=False, tracking_minutes=30):			
-	satnames=[]; satids=[]; lats=[]; lons=[]; 
 	sats_details = getSatTrackingCoordList(sd, getISROLEOSatelliteList(), tracking_minutes)
 	plotTrack(sats_details, title, 'leo_tracking.png', c_latitude, c_longitude, savePlot, tracking_minutes)
 	return
 	
 # plot nav sats	
 def plotNAV(sd, title, c_latitude=10, c_longitude=80, savePlot=False, tracking_minutes=600):			
-	satnames=[]; satids=[]; lats=[]; lons=[]; 
 	sats_details = getSatTrackingCoordList(sd, getISRONavSatelliteList(), tracking_minutes)
 	plotTrack(sats_details, title, 'nav_tracking.png', c_latitude, c_longitude, savePlot, tracking_minutes)
 	return
