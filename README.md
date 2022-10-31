@@ -60,6 +60,8 @@ Results for the list provided as in line 390 of source code
 
  ![results](./img/sats_tracking.png)
 
+* [31Oct2022] 
+    1.  Removed "RISAT 2" entry as the satellite has reentered the atmosphere.  
 * [02July2020] 
     1.  TLE archive functionality added. When refreshing TLE's after two weeks, old local TLE will now be archived with timestamp attached.  
     *  If celestrak.com does not return TLEs (for whatever reason), program will now skip tracing those satellites instead of reporting errors.
