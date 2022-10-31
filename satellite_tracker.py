@@ -34,7 +34,7 @@ eart_sats_sunsync = {	'RESOURCESAT-1': 28051, 'RESOURCESAT-2': 37387,
 						'CARTOSAT-2B': 36795, 'CARTOSAT-2C': 41599, 
 						'CARTOSAT-2D': 41948, 'CARTOSAT-2E': 42767, 
 						'CARTOSAT-2F': 43111, 'CARTOSAT-3': 44804, 
-						'RISAT 2': 34807, 'RISAT-1': 38248, 
+						'RISAT-1': 38248, 
 						'RISAT-2B': 44233, 'RISAT-2BR1': 44857, 
 						'OCEANSAT-2': 35931, 'MEGHA-TROPIQUES': 37838, 
 						'SARAL': 39086, 'SCATSAT 1': 41790, 
@@ -387,7 +387,7 @@ if __name__=="__main__":
 	savePng = True;
 	plotGEO(sats_dict, 'ISRO GEO satellites', c_lat, c_lon, savePng )	
 	# Single/multiple user specified satellite tracking
-	sat_names=['CARTOSAT-3','RISAT 2','RISAT-1','RISAT-2B','RISAT-2BR1']
+	sat_names=['CARTOSAT-3','RISAT-1','RISAT-2B','RISAT-2BR1']
 	tracking_minutes = 100; savePng = True;
 	plotSatellites(sats_dict, 'satellite tracks for the next {} minutes'.format(tracking_minutes), sat_names, c_lat, c_lon, savePng, tracking_minutes)		
 
