@@ -36,7 +36,7 @@ eart_sats_sunsync = {	'RESOURCESAT-1': 28051, 'RESOURCESAT-2': 37387,
 						'CARTOSAT-2F': 43111, 'CARTOSAT-3': 44804, 
 						'RISAT-1': 38248, 
 						'RISAT-2B': 44233, 'RISAT-2BR1': 44857, 
-						'OCEANSAT-2': 35931, 'MEGHA-TROPIQUES': 37838, 
+						'OCEANSAT-2': 35931,
 						'SARAL': 39086, 'SCATSAT 1': 41790, 
 						'HYSIS':43719, 'RISAT-2BR2':46905}
 # Earth Observation-Geostationary orbit
