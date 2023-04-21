@@ -67,8 +67,11 @@ Results for the list provided as in line 390 of source code
     *  If celestrak.com does not return TLEs (for whatever reason), program will now skip tracing those satellites instead of reporting errors.
 
 * [06Dec2020] 
-    1.  Included additional satellites [ 'RISAT-2BR2', 'HYSIS', 'PRATHAM' ] name and id into the list.    
-
+    1.  Included additional satellites [ 'RISAT-2BR2', 'HYSIS', 'PRATHAM' ] name and id into the list.      
+     
+* [21Apr2023] 
+    1.  Celestrak error code changed from 'No TLE found' to 'No GP data found'. Code modified to accommodate both codes.   
+     
 
 ## To-do list
 * This initial version is ISRO specific and could be modified to fit other agencies.

@@ -109,7 +109,7 @@ def saveTLE(dictionary, filename):
 				file.seek(len(file.read())) # seek the end of file 
 				b = bytearray(fd.read())	# read as `bytes` object
 				tmp = str(b, 'utf-8') #...and now we convert it into string				
-				if not tmp.startswith('No TLE found'):
+				if not (tmp.startswith('No TLE found') or tmp.startswith('No GP data found') ):
 					file.write(b)				# and append-add it
 				else:
 					print('TLE not found for ' + satname + '[' + str(satid) + ']' )					
