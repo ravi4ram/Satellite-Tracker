@@ -45,7 +45,8 @@ eart_sats_geostat = {	'INSAT-3D': 39216, 'INSAT-3DR': 41752}
 regi_navi_geostat = {	'IRNSS-1A': 39199, 'IRNSS-1B': 39635, 
 						'IRNSS-1C': 40269, 'IRNSS-1D': 40547, 
 						'IRNSS-1E': 41241, 'IRNSS-1F': 41384, 
-						'IRNSS-1G': 41469, 'IRNSS-1I': 43286}
+						'IRNSS-1G': 41469, 'IRNSS-1I': 43286,
+                        'IRNSS-1J': 56759}
 # Scientific 
 scie_sats = {			'ASTROSAT': 40930}
 # Experimental
@@ -101,7 +102,7 @@ def deleteDictEntry(satname):
 # provided in the dictionary
 def saveTLE(dictionary, filename):
 	file_out = open(filename, "w")	# create a new file 
-	base = 'http://celestrak.com/cgi-bin/TLE.pl?CATNR='
+	base = 'https://celestrak.org/NORAD/elements/gp.php?FORMAT=TLE&CATNR='
 	for satname, satid in dictionary.items():
 		url = base + str(satid)	
 		with urllib.request.urlopen(url) as fd:

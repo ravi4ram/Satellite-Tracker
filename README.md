@@ -72,6 +72,10 @@ Results for the list provided as in line 390 of source code
 * [21Apr2023] 
     1.  Celestrak error code changed from 'No TLE found' to 'No GP data found'. Code modified to accommodate both codes.   
      
+* [31May2023] 
+    1.  Included satellite 'IRNSS-1J' name and id.
+    2.  celestrak URL changed to https link 
+
 
 ## To-do list
 * This initial version is ISRO specific and could be modified to fit other agencies.
